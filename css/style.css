@@ -1,0 +1,78 @@
+@import 'normalize.css';
+* {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+}
+
+html {
+    font-size: 3rem;
+    /* lazy scale by increasing this */
+    background-color: #808080;
+}
+
+.centered-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.outer-circle {
+    height: 10rem;
+    width: 10rem;
+    padding: 0.5rem;
+}
+
+.inner-circle {
+    height: 4.75rem;
+    width: 4.75rem;
+    position: relative;
+    margin: 2.25rem;
+    background-color: white;
+    border: 0.25rem solid #222;
+}
+
+.round {
+    border-radius: 100%;
+}
+
+.corner {
+    height: 50%;
+    width: 50%;
+    float: left;
+    border: 0.25rem solid #222;
+    border-collapse: collapse;
+    -webkit-box-shadow: 5px 5px 59px 0px rgba(0, 0, 0, 0.71);
+    -moz-box-shadow: 5px 5px 59px 0px rgba(0, 0, 0, 0.71);
+    box-shadow: 5px 5px 59px 0px rgba(0, 0, 0, 0.71);
+}
+
+.green {
+    background-color: #39d14a;
+    border-top-left-radius: 100%;
+    border-left: 0.5rem solid #222;
+    border-top: 0.5rem solid #222;
+}
+
+.red {
+    background-color: red;
+    border-top-right-radius: 100%;
+    border-right: 0.5rem solid #222;
+    border-top: 0.5rem solid #222;
+}
+
+.yellow {
+    background-color: yellow;
+    border-bottom-left-radius: 100%;
+    border-left: 0.5rem solid #222;
+    border-bottom: 0.5rem solid #222;
+}
+
+.blue {
+    background-color: #00a9ee;
+    border-bottom-right-radius: 100%;
+    border-right: 0.5rem solid #222;
+    border-bottom: 0.5rem solid #222;
+}

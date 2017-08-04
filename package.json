@@ -1,0 +1,22 @@
+{
+  "name": "fcc-simon",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kganguly/FCC-Simon.git"
+  },
+  "author": "Kaushik Ganguly",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kganguly/FCC-Simon/issues"
+  },
+  "homepage": "https://github.com/kganguly/FCC-Simon#readme",
+  "devDependencies": {
+    "eslint": "^4.3.0"
+  }
+}
