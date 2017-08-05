@@ -20,8 +20,9 @@ var Simon = (function () {
 
 
         Button.queue = [];
-        Button.prototype.trigger = function () {
-            this.sound.play();
+        Button.locked = false;
+        Button.prototype.trigger = function (muted) {
+            if (!muted) this.sound.play();
             this.el.css("background-color", this.litColor);
             // this.sound.onended = 
 
@@ -29,10 +30,16 @@ var Simon = (function () {
             setTimeout(function () {
                 console.log("COLOR: " + that.color);
                 that.el.css("background-color", that.color);
-                setTimeout(function () {
-                    Button.queue.shift();
-                    if (Button.queue.length > 0) Button.queue[0].trigger();
-                }, 500);
+                if (!isPlayerTurn) {
+                    setTimeout(function () {
+                        Button.queue.shift();
+                        if (Button.queue.length > 0) Button.queue[0].trigger();
+                        else {
+                            Button.locked = false;
+                            isPlayerTurn = true;
+                        }
+                    }, 500);
+                }
             }, 1000);
         };
         Button.prototype.play = function () {
@@ -44,7 +51,10 @@ var Simon = (function () {
             this.el.css("background-color", this.color);
         }
 
-        var currentStep = 9;
+        var finalStage = 1;
+        var currentStage = 1;
+        var currentStep = 0;
+        var isPlayerTurn = false;
         var buttonArray;
         var redButton;
         var greenButton;
@@ -63,8 +73,44 @@ var Simon = (function () {
             buttonArray.push(yellowButton);
         }
 
+        function sucess() {
+            playAll();
+            setTimeout(playAll, 1500);
+            setTimeout(playAll, 3000);
+        }
+
+        function playAll() {
+            for (var i = 0; i < buttonArray.length; i++) {
+                buttonArray[i].trigger(true);
+            }
+        }
+
+        this.isLocked = function () {
+            return Button.locked;
+        }
+
+        this.press = function (index) {
+            console.log("INDEX: " + index);
+            if (index == steps[currentStep]) {
+                buttonArray[index].trigger();
+                currentStep++;
+                if (currentStep === finalStage) {
+                    setTimeout(sucess, 2000);
+                } else if (currentStep === currentStage) {
+                    currentStage++;
+                    currentStep = 0;
+                    setTimeout(this.playSteps, 2000);
+                }
+            } else {
+                currentStep = 0;
+                setTimeout(this.playSteps, 2000);
+            }
+        }
+
         this.playSteps = function () {
-            for (var i = 0; i < currentStep; i++) {
+            Button.locked = true;
+            isPlayerTurn = false;
+            for (var i = 0; i < currentStage; i++) {
                 var button = buttonArray[steps[i]];
                 button.play();
             }
@@ -74,7 +120,6 @@ var Simon = (function () {
             console.log("buttonArray: " + buttonArray);
             steps.generateSteps();
             console.log("steps: " + steps);
-            currentStep++;
             setTimeout(this.playSteps, 1000);
         }
     }
@@ -83,6 +128,8 @@ var Simon = (function () {
         try {
             this.sound = document.createElement("audio");
             this.src = src;
+            /*Move this to mobile audio click listener */
+            this.sound.src = this.src;
             this.sound.setAttribute("preload", "auto");
             this.sound.setAttribute("controls", "none");
             this.sound.style.display = "none";
@@ -120,9 +167,12 @@ $(document).ready(function () {
 });
 
 function setListeners() {
-    console.log("Listeners");
     $(".inner-circle").click(function () {
-        console.log("CLICK");
-        game.start();
+        if (!game.isLocked())
+            game.start();
+    });
+    $(".corner").click(function () {
+        if (!game.isLocked())
+            game.press(this.getAttribute("index"));
     });
 }
