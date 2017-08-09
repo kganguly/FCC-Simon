@@ -160,6 +160,7 @@ var Simon = (function () {
 })();
 
 var game = Simon.getInstance();
+var power = false;
 
 $(document).ready(function () {
     setListeners();
@@ -167,12 +168,17 @@ $(document).ready(function () {
 });
 
 function setListeners() {
-    $(".inner-circle").click(function () {
-        if (!game.isLocked())
+    document.querySelector("#switch").addEventListener("click", function () {
+        console.log("POWER");
+        power = power ? false : true;
+        document.querySelector("#slider").style.float = power ? "right" : "left";
+    });
+    $("#start button").click(function () {
+        if (!game.isLocked() && power)
             game.start();
     });
     $(".corner").click(function () {
-        if (!game.isLocked())
+        if (!game.isLocked() && power)
             game.press(this.getAttribute("index"));
     });
 }
