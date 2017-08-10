@@ -4,9 +4,8 @@ var play = true;
 var Simon = (function () {
     function Simon() {
         var steps = []
-        steps.totalSteps = 20;
         steps.generateSteps = function () {
-            for (var i = 0; i < this.totalSteps; i++) {
+            for (var i = 0; i < finalStage; i++) {
                 this.push(Math.floor(Math.random() * 4));
             }
         }
@@ -51,8 +50,9 @@ var Simon = (function () {
             this.el.css("background-color", this.color);
         }
 
-        var finalStage = 1;
-        var currentStage = 1;
+        var power = false;
+        var finalStage = 2;
+        var currentStage = 0;
         var currentStep = 0;
         var isPlayerTurn = false;
         var buttonArray;
@@ -85,10 +85,14 @@ var Simon = (function () {
             }
         }
 
+        function nextStage() {
+            currentStage++;
+            document.querySelector("#count").textContent = currentStage;
+        }
+
         this.isLocked = function () {
             return Button.locked;
         }
-
         this.press = function (index) {
             console.log("INDEX: " + index);
             if (index == steps[currentStep]) {
@@ -97,7 +101,7 @@ var Simon = (function () {
                 if (currentStep === finalStage) {
                     setTimeout(sucess, 2000);
                 } else if (currentStep === currentStage) {
-                    currentStage++;
+                    nextStage();
                     currentStep = 0;
                     setTimeout(this.playSteps, 2000);
                 }
@@ -106,7 +110,6 @@ var Simon = (function () {
                 setTimeout(this.playSteps, 2000);
             }
         }
-
         this.playSteps = function () {
             Button.locked = true;
             isPlayerTurn = false;
@@ -120,7 +123,16 @@ var Simon = (function () {
             console.log("buttonArray: " + buttonArray);
             steps.generateSteps();
             console.log("steps: " + steps);
+            nextStage();
             setTimeout(this.playSteps, 1000);
+        }
+        this.togglePower = function () {
+            power = power ? false : true;
+            document.querySelector("#slider").style.float = power ? "right" : "left";
+            document.querySelector("#count").textContent = power ? "--" : "";
+        }
+        this.isOn = function () {
+            return power;
         }
     }
 
@@ -169,16 +181,15 @@ $(document).ready(function () {
 
 function setListeners() {
     document.querySelector("#switch").addEventListener("click", function () {
-        console.log("POWER");
-        power = power ? false : true;
-        document.querySelector("#slider").style.float = power ? "right" : "left";
+        game.togglePower();
+
     });
     $("#start button").click(function () {
-        if (!game.isLocked() && power)
+        if (!game.isLocked() && game.isOn())
             game.start();
     });
     $(".corner").click(function () {
-        if (!game.isLocked() && power)
+        if (!game.isLocked() && game.isOn())
             game.press(this.getAttribute("index"));
     });
 }

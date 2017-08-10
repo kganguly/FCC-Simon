@@ -7,12 +7,12 @@
 }
 
 html {
-    font-size: 3rem;
+    font-size: 3.2rem;
     /* lazy scale by increasing this */
     background-color: #808080;
 }
 
-.centered-container {
+.centered {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -22,14 +22,18 @@ html {
 .outer-circle {
     height: 10rem;
     width: 10rem;
-    padding: 0.5rem;
+    /* padding: 0.5rem; */
+    border: solid 1px black;
+    -webkit-box-shadow: 5px 5px 59px 0px rgba(0, 0, 0, 0.71);
+    -moz-box-shadow: 5px 5px 59px 0px rgba(0, 0, 0, 0.71);
+    box-shadow: 5px 5px 59px 0px rgba(0, 0, 0, 0.71);
 }
 
 .inner-circle {
     height: 4.75rem;
     width: 4.75rem;
     position: relative;
-    margin: 2.25rem;
+    margin: 2.75rem;
     background-color: white;
     border: 0.25rem solid #222;
 }
@@ -53,7 +57,7 @@ header>h1 {
     height: 1.2rem;
 }
 
-#count,
+#counter,
 #start,
 #strict {
     font-size: 0.25rem;
@@ -62,8 +66,8 @@ header>h1 {
 }
 
 .label {
-    font-size: 0.25rem;
-    font-family: sans-serif;
+    font-size: 0.3rem;
+    font-family: 'Saira Extra Condensed', sans-serif;
 }
 
 .button-wrapper,
@@ -80,12 +84,18 @@ header>h1 {
     width: 1.2rem;
     background-color: black;
     border-radius: 10%;
+    color: red;
+    position: relative;
+}
+
+#count {
+    vertical-align: middle;
 }
 
 header button {
     position: relative;
-    height: 0.6rem;
-    width: 0.6rem;
+    height: 0.5rem;
+    width: 0.5rem;
     border: solid 4px black;
     -webkit-box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.71);
     -moz-box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.71);
@@ -121,7 +131,7 @@ header .label {
     ;
 }
 
-#switch>div {
+#switch>.control {
     display: inline-block;
     background-color: black;
     height: 0.4rem;
@@ -135,6 +145,7 @@ header .label {
 #switch>.label {
     vertical-align: middle;
     margin: 0;
+    display: inline-block;
 }
 
 #slider {
@@ -155,9 +166,6 @@ header .label {
     float: left;
     border: 0.25rem solid #222;
     border-collapse: collapse;
-    -webkit-box-shadow: 5px 5px 59px 0px rgba(0, 0, 0, 0.71);
-    -moz-box-shadow: 5px 5px 59px 0px rgba(0, 0, 0, 0.71);
-    box-shadow: 5px 5px 59px 0px rgba(0, 0, 0, 0.71);
 }
 
 .green {

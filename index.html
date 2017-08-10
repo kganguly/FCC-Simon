@@ -7,11 +7,12 @@
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script defer src="js/index.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Alfa+Slab+One" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
-    <main class="centered-container">
+    <main class="centered">
         <div class="outer-circle round">
             <div class="green corner" index="0"></div>
             <div class="red corner" index="1"></div>
@@ -21,8 +22,8 @@
                 <header>
                     <h1>simon</h1>
                     <div class="row" id="controls">
-                        <div id="count">
-                            <div id="countDisplay"></div>
+                        <div id="counter">
+                            <div id="countDisplay"><span class="centered" id="count"></span></div>
                             <div class="label">COUNT</div>
                         </div>
                         <div id="start">
@@ -39,11 +40,11 @@
                         </div>
                     </div>
                     <div class="row" id="switch">
-                        <span class=label>OFF</span>
-                        <div>
+                        <div class=label>OFF</div>
+                        <div class="control">
                             <div id="slider"></div>
                         </div>
-                        <span class="label">ON</span>
+                        <div class="label">ON</div>
                     </div>
                 </header>
 
