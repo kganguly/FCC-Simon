@@ -5,6 +5,7 @@ var Simon = (function () {
     function Simon() {
         var steps = []
         steps.generateSteps = function () {
+            this.length = 0;
             for (var i = 0; i < finalStage; i++) {
                 this.push(Math.floor(Math.random() * 4));
             }
@@ -39,7 +40,7 @@ var Simon = (function () {
                         }
                     }, 500);
                 }
-            }, 1000);
+            }, 500);
         };
         Button.prototype.play = function () {
             Button.queue.push(this);
@@ -73,10 +74,11 @@ var Simon = (function () {
             buttonArray.push(yellowButton);
         }
 
-        function sucess() {
+        function success() {
             playAll();
             setTimeout(playAll, 1500);
             setTimeout(playAll, 3000);
+            setTimeout(game.start, 4000);
         }
 
         function playAll() {
@@ -87,7 +89,27 @@ var Simon = (function () {
 
         function nextStage() {
             currentStage++;
-            document.querySelector("#count").textContent = currentStage;
+            console.log("Next Stage: " + currentStage);
+            document.querySelector("#count").textContent = currentStage > 9 ? currentStage : "0" + currentStage;
+        }
+
+        function reset() {
+            currentStage = 0;
+            currentStep = 0;
+            isPlayerTurn = false;
+            document.querySelector("#count").textContent = "--";
+            Button.queue.length = 0;
+        }
+
+        function playSteps() {
+            console.log("Current Stage: " + currentStage);
+            Button.locked = true;
+            isPlayerTurn = false;
+            for (var i = 0; i < currentStage; i++) {
+                var button = buttonArray[steps[i]];
+                console.log("PLAY: " + steps[i]);
+                button.play();
+            }
         }
 
         this.isLocked = function () {
@@ -99,32 +121,27 @@ var Simon = (function () {
                 buttonArray[index].trigger();
                 currentStep++;
                 if (currentStep === finalStage) {
-                    setTimeout(sucess, 2000);
+                    setTimeout(success, 2000);
+
                 } else if (currentStep === currentStage) {
-                    nextStage();
+                    setTimeout(nextStage, 1500);
                     currentStep = 0;
-                    setTimeout(this.playSteps, 2000);
+                    setTimeout(playSteps, 2000);
                 }
             } else {
                 currentStep = 0;
-                setTimeout(this.playSteps, 2000);
+                setTimeout(playSteps, 2000);
             }
         }
-        this.playSteps = function () {
-            Button.locked = true;
-            isPlayerTurn = false;
-            for (var i = 0; i < currentStage; i++) {
-                var button = buttonArray[steps[i]];
-                button.play();
-            }
-        }
+
         this.start = function () {
-            buildButtonArray();
+            reset();
+            if (!buttonArray) buildButtonArray();
             console.log("buttonArray: " + buttonArray);
             steps.generateSteps();
             console.log("steps: " + steps);
-            nextStage();
-            setTimeout(this.playSteps, 1000);
+            setTimeout(nextStage, 500);
+            setTimeout(playSteps, 1000);
         }
         this.togglePower = function () {
             power = power ? false : true;
@@ -172,7 +189,6 @@ var Simon = (function () {
 })();
 
 var game = Simon.getInstance();
-var power = false;
 
 $(document).ready(function () {
     setListeners();

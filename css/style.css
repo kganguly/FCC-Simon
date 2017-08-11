@@ -34,7 +34,7 @@ html {
     width: 4.75rem;
     position: relative;
     margin: 2.75rem;
-    background-color: white;
+    background-color: #fdfdf8;
     border: 0.25rem solid #222;
 }
 
@@ -90,6 +90,8 @@ header>h1 {
 
 #count {
     vertical-align: middle;
+    font-size: 0.6rem;
+    font-family: 'VT323', sans-serif;
 }
 
 header button {
@@ -100,14 +102,27 @@ header button {
     -webkit-box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.71);
     -moz-box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.71);
     box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.71);
+    transition: background-color 500ms;
+}
+
+header button:focus {
+    outline: 0;
 }
 
 #start button {
     background-color: red;
 }
 
+#start button:active {
+    background-color: #c10202;
+}
+
 #strict button {
     background-color: yellow;
+}
+
+#strict button:active {
+    background-color: #a5a901;
 }
 
 #strictLED {
@@ -154,6 +169,9 @@ header .label {
     width: 0.33rem;
     vertical-align: middle;
     float: left;
+    -webkit-box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.71);
+    -moz-box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.71);
+    box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.71);
 }
 
 .round {
