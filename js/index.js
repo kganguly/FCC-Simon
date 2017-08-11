@@ -11,6 +11,7 @@ var Simon = (function () {
             }
         }
 
+
         function Button(color, litColor, audioSrc, el) {
             this.color = color;
             this.litColor = litColor;
@@ -18,14 +19,13 @@ var Simon = (function () {
             this.el = el;
         }
 
-
         Button.queue = [];
         Button.locked = false;
         Button.failSound = new Sound("media/Buzz-SoundBible.com-1790490578.mp3");
         Button.prototype.trigger = function (muted) {
+            if (!power) return;
             if (!muted) this.sound.play();
             this.el.css("background-color", this.litColor);
-            // this.sound.onended = 
 
             var that = this;
             setTimeout(function () {
@@ -44,8 +44,10 @@ var Simon = (function () {
             }, 500);
         };
         Button.prototype.fail = function () {
+            if (!power) return;
             Button.failSound.play();
             this.el.css("background-color", this.litColor);
+
             var that = this;
             setTimeout(function () {
                 console.log("COLOR: " + that.color);
@@ -54,13 +56,11 @@ var Simon = (function () {
             }, 500);
         };
         Button.prototype.play = function () {
+            if (!power) return;
             Button.queue.push(this);
             if (Button.queue.length === 1) this.trigger();
         }
-        Button.prototype.stop = function () {
-            this.sound.pause();
-            this.el.css("background-color", this.color);
-        }
+
 
         var power = false;
         var finalStage = 2;
@@ -86,6 +86,7 @@ var Simon = (function () {
         }
 
         function success() {
+            if (!power) return;
             playAll();
             setTimeout(playAll, 1000);
             setTimeout(playAll, 2000);
@@ -93,26 +94,29 @@ var Simon = (function () {
         }
 
         function playAll() {
+            if (!power) return;
             for (var i = 0; i < buttonArray.length; i++) {
                 buttonArray[i].trigger(true);
             }
         }
 
         function nextStage() {
+            if (!power) return;
             currentStage++;
             console.log("Next Stage: " + currentStage);
             document.querySelector("#count").textContent = currentStage > 9 ? currentStage : "0" + currentStage;
         }
 
         function reset() {
+            if (!power) return;
             currentStage = 0;
             currentStep = 0;
             isPlayerTurn = false;
             document.querySelector("#count").textContent = "--";
-            Button.queue.length = 0;
         }
 
         function playSteps() {
+            if (!power) return;
             console.log("Current Stage: " + currentStage);
             Button.locked = true;
             isPlayerTurn = false;
