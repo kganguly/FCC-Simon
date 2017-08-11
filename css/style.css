@@ -130,7 +130,7 @@ header button:focus {
     top: -0.35rem;
     height: 0.2rem;
     width: 0.2rem;
-    background-color: red;
+    background-color: black;
     border: solid 2px black;
     left: 50%;
     transform: translateX(-50%);

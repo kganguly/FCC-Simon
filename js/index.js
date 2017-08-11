@@ -67,6 +67,7 @@ var Simon = (function () {
         var currentStage = 0;
         var currentStep = 0;
         var isPlayerTurn = false;
+        var strictMode = false;
         var buttonArray;
         var redButton;
         var greenButton;
@@ -145,7 +146,8 @@ var Simon = (function () {
             } else {
                 buttonArray[index].fail();
                 currentStep = 0;
-                setTimeout(playSteps, 2000);
+                if (strictMode) setTimeout(game.start, 2000);
+                else setTimeout(playSteps, 2000);
             }
         }
 
@@ -165,6 +167,11 @@ var Simon = (function () {
         }
         this.isOn = function () {
             return power;
+        }
+        this.toggleStrictMode = function () {
+            strictMode = strictMode ? false : true;
+            if (strictMode) document.querySelector("#strictLED").style.backgroundColor = "red";
+            else document.querySelector("#strictLED").removeAttribute("style");
         }
     }
 
@@ -218,6 +225,11 @@ function setListeners() {
     $("#start button").click(function () {
         if (!game.isLocked() && game.isOn())
             game.start();
+    });
+    document.querySelector("#strict button").addEventListener("click", function () {
+        if (!game.isLocked() && game.isOn()) {
+            game.toggleStrictMode();
+        }
     });
     $(".corner").click(function () {
         if (!game.isLocked() && game.isOn())
