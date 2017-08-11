@@ -21,6 +21,7 @@ var Simon = (function () {
 
         Button.queue = [];
         Button.locked = false;
+        Button.failSound = new Sound("media/Buzz-SoundBible.com-1790490578.mp3");
         Button.prototype.trigger = function (muted) {
             if (!muted) this.sound.play();
             this.el.css("background-color", this.litColor);
@@ -40,6 +41,16 @@ var Simon = (function () {
                         }
                     }, 500);
                 }
+            }, 500);
+        };
+        Button.prototype.fail = function () {
+            Button.failSound.play();
+            this.el.css("background-color", this.litColor);
+            var that = this;
+            setTimeout(function () {
+                console.log("COLOR: " + that.color);
+                that.el.css("background-color", that.color);
+                Button.failSound.stop();
             }, 500);
         };
         Button.prototype.play = function () {
@@ -76,9 +87,9 @@ var Simon = (function () {
 
         function success() {
             playAll();
-            setTimeout(playAll, 1500);
-            setTimeout(playAll, 3000);
-            setTimeout(game.start, 4000);
+            setTimeout(playAll, 1000);
+            setTimeout(playAll, 2000);
+            setTimeout(game.start, 3000);
         }
 
         function playAll() {
@@ -106,9 +117,8 @@ var Simon = (function () {
             Button.locked = true;
             isPlayerTurn = false;
             for (var i = 0; i < currentStage; i++) {
-                var button = buttonArray[steps[i]];
+                buttonArray[steps[i]].play();
                 console.log("PLAY: " + steps[i]);
-                button.play();
             }
         }
 
@@ -129,6 +139,7 @@ var Simon = (function () {
                     setTimeout(playSteps, 2000);
                 }
             } else {
+                buttonArray[index].fail();
                 currentStep = 0;
                 setTimeout(playSteps, 2000);
             }
