@@ -63,7 +63,7 @@ var Simon = (function () {
 
 
         var power = false;
-        var finalStage = 2;
+        var finalStage = 20;
         var currentStage = 0;
         var currentStep = 0;
         var isPlayerTurn = false;

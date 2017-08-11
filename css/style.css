@@ -22,8 +22,6 @@ html {
 .outer-circle {
     height: 10rem;
     width: 10rem;
-    /* padding: 0.5rem; */
-    border: solid 1px black;
     -webkit-box-shadow: 5px 5px 59px 0px rgba(0, 0, 0, 0.71);
     -moz-box-shadow: 5px 5px 59px 0px rgba(0, 0, 0, 0.71);
     box-shadow: 5px 5px 59px 0px rgba(0, 0, 0, 0.71);
@@ -32,8 +30,6 @@ html {
 .inner-circle {
     height: 4.75rem;
     width: 4.75rem;
-    position: relative;
-    margin: 2.75rem;
     background-color: #fdfdf8;
     border: 0.25rem solid #222;
 }
