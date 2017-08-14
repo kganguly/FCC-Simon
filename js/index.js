@@ -25,12 +25,12 @@ var Simon = (function () {
         Button.prototype.trigger = function (muted) {
             if (!power) return;
             if (!muted) this.sound.play();
-            this.el.css("background-color", this.litColor);
+            this.el.style.backgroundColor = this.litColor;
 
             var that = this;
             setTimeout(function () {
                 console.log("COLOR: " + that.color);
-                that.el.css("background-color", that.color);
+                that.el.style.backgroundColor = that.color;
                 if (!isPlayerTurn) {
                     setTimeout(function () {
                         Button.queue.shift();
@@ -46,12 +46,12 @@ var Simon = (function () {
         Button.prototype.fail = function () {
             if (!power) return;
             Button.failSound.play();
-            this.el.css("background-color", this.litColor);
+            this.el.style.backgroundColor = this.litColor;
 
             var that = this;
             setTimeout(function () {
                 console.log("COLOR: " + that.color);
-                that.el.css("background-color", that.color);
+                that.el.style.backgroundColor = that.color;
                 Button.failSound.stop();
             }, 500);
         };
@@ -76,13 +76,13 @@ var Simon = (function () {
 
         function buildButtonArray() {
             buttonArray = [];
-            greenButton = new Button("#39d14a", "white", "https://s3.amazonaws.com/freecodecamp/simonSound1.mp3", $(".green"));
+            greenButton = new Button("#39d14a", "white", "https://s3.amazonaws.com/freecodecamp/simonSound1.mp3", document.querySelector(".green"));
             buttonArray.push(greenButton);
-            redButton = new Button("red", "white", "https://s3.amazonaws.com/freecodecamp/simonSound2.mp3", $(".red"));
+            redButton = new Button("red", "white", "https://s3.amazonaws.com/freecodecamp/simonSound2.mp3", document.querySelector(".red"));
             buttonArray.push(redButton);
-            blueButton = new Button("#00a9ee", "white", "https://s3.amazonaws.com/freecodecamp/simonSound3.mp3", $(".blue"));
+            blueButton = new Button("#00a9ee", "white", "https://s3.amazonaws.com/freecodecamp/simonSound3.mp3", document.querySelector(".blue"));
             buttonArray.push(blueButton);
-            yellowButton = new Button("yellow", "white", "https://s3.amazonaws.com/freecodecamp/simonSound4.mp3", $(".yellow"));
+            yellowButton = new Button("yellow", "white", "https://s3.amazonaws.com/freecodecamp/simonSound4.mp3", document.querySelector(".yellow"));
             buttonArray.push(yellowButton);
         }
 
@@ -212,7 +212,7 @@ var Simon = (function () {
 
 var game = Simon.getInstance();
 
-$(document).ready(function () {
+document.addEventListener("DOMContentLoaded", function () {
     setListeners();
 
 });
@@ -222,7 +222,7 @@ function setListeners() {
         game.togglePower();
 
     });
-    $("#start button").click(function () {
+    document.querySelector("#start button").addEventListener("click", function () {
         if (!game.isLocked() && game.isOn())
             game.start();
     });
@@ -231,8 +231,11 @@ function setListeners() {
             game.toggleStrictMode();
         }
     });
-    $(".corner").click(function () {
-        if (!game.isLocked() && game.isOn())
-            game.press(this.getAttribute("index"));
-    });
+    var corners = document.querySelectorAll(".corner");
+    for (var i = 0; i < corners.length; i++) {
+        corners[i].addEventListener("click", function () {
+            if (!game.isLocked() && game.isOn())
+                game.press(this.getAttribute("index"));
+        });
+    }
 }
